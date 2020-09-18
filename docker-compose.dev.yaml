@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: product-api-db-dev
+    image: postgres:latest
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: super_admin
+      POSTGRES_PASSWORD: super_password
+      POSTGRES_DB: PRODUCTS_DB
+    volumes:
+      - PRODUCTS_DB_VOLUME:/var/lib/postgresql/data
+      - ./docker/postgres/shared/:/shared/
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: product-api-pgadmin-dev
+    image: dpage/pgadmin4
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: superadmin@productsapi.org
+      PGADMIN_DEFAULT_PASSWORD: superpassword
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/conf/server.json
+    volumes:
+      - ./docker/pgadmin/:/pgadmin4/conf/
+    restart: unless-stopped
+
+volumes:
+  PRODUCTS_DB_VOLUME:

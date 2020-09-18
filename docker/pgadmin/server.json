@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "product-api-server-db",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "super_admin",
+      "Host": "postgres",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "PRODUCTS_DB"
+    }
+  }
+}
