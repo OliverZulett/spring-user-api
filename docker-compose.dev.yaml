@@ -1,8 +1,9 @@
-version: "3.7"
+version: "3.8"
 
 services:
+
   postgres:
-    container_name: product-api-db-dev
+    container_name: USERS_DB_DEV
     image: postgres:latest
     hostname: postgres
     ports:
@@ -10,19 +11,19 @@ services:
     environment:
       POSTGRES_USER: super_admin
       POSTGRES_PASSWORD: super_password
-      POSTGRES_DB: PRODUCTS_DB
+      POSTGRES_DB: USERS_DB
     volumes:
-      - PRODUCTS_DB_VOLUME:/var/lib/postgresql/data
+      - SPRING_API_DB:/var/lib/postgresql/data
       - ./docker/postgres/shared/:/shared/
     restart: unless-stopped
 
   pgadmin:
-    container_name: product-api-pgadmin-dev
+    container_name: SPRING_API_PGADMIN
     image: dpage/pgadmin4
     ports:
       - "5555:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: superadmin@productsapi.org
+      PGADMIN_DEFAULT_EMAIL: superadmin@springapi.org
       PGADMIN_DEFAULT_PASSWORD: superpassword
       PGADMIN_SERVER_JSON_FILE: /pgadmin4/conf/server.json
     volumes:
@@ -30,4 +31,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  PRODUCTS_DB_VOLUME:
+  SPRING_API_DB:

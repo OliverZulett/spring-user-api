@@ -1,13 +1,13 @@
 {
   "Servers": {
     "1": {
-      "Name": "product-api-server-db",
+      "Name": "SPRING_API_DB_SERVER",
       "Group": "Servers",
       "Port": 5432,
       "Username": "super_admin",
       "Host": "postgres",
       "SSLMode": "prefer",
-      "MaintenanceDB": "PRODUCTS_DB"
+      "MaintenanceDB": "COMPANY_DB"
     }
   }
 }

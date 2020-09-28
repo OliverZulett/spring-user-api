@@ -1,33 +1,16 @@
 version: "3.7"
 
 services:
-  postgres:
-    container_name: product-api-postgres
-    image: postgres:latest
-    hostname: postgres
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: super_admin
-      POSTGRES_PASSWORD: super_password
-      POSTGRES_DB: PRODUCTS_DB
-    volumes:
-      - PRODUCT_API_POSTGRES_VOLUME:/var/lib/postgresql/data
-      - ./docker/postgres/shared/:/shared/
-    restart: unless-stopped
-    networks:
-      - interapi
-      - apidb
 
   springbootapp:
     build: .
-    container_name: product-api-spring
+    container_name: company-api-spring
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/PRODUCTS_DB
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/COMPANY_DB
       SPRING_DATASOURCE_USERNAME: super_admin
       SPRING_DATASOURCE_PASSWORD: super_password
     ports:
-      - 8082:8080
+      - 8080:8080
     depends_on:
       - postgres
     links:
@@ -36,13 +19,31 @@ services:
       - apidb
       - interdb
 
+  postgres:
+    container_name: company-api-postgres
+    image: postgres:latest
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: super_admin
+      POSTGRES_PASSWORD: super_password
+      POSTGRES_DB: COMPANY_DB
+    volumes:
+      - COMPANY_DB_VOLUME:/var/lib/postgresql/data
+      - ./docker/postgres/shared/:/shared/
+    restart: unless-stopped
+    networks:
+      - interapi
+      - apidb
+
   pgadmin:
-    container_name: product-api-pgadmin
+    container_name: company-api-pgadmin
     image: dpage/pgadmin4
     ports:
       - "5555:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: superadmin@productsapi.org
+      PGADMIN_DEFAULT_EMAIL: superadmin@companyapi.org
       PGADMIN_DEFAULT_PASSWORD: superpassword
       PGADMIN_SERVER_JSON_FILE: /pgadmin4/conf/server.json
     volumes:
@@ -50,18 +51,18 @@ services:
     restart: unless-stopped
 
 volumes:
-  PRODUCT_API_POSTGRES_VOLUME:
+  COMPANY_DB_VOLUME:
 
 networks:
   interapi:
-    name: productapi_interapi
+    name: companyapi_interapi
     driver: bridge
   apidb:
-    name: productapi_apidb
+    name: companyapi_apidb
     driver: bridge
   default:
-    name: productapi_default
+    name: companyapi_default
     driver: bridge
   interdb:
-    name: productapi_interdb
+    name: companyapi_interdb
     driver: bridge
