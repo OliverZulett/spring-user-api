@@ -7,7 +7,7 @@
       "Username": "super_admin",
       "Host": "postgres",
       "SSLMode": "prefer",
-      "MaintenanceDB": "COMPANY_DB"
+      "MaintenanceDB": "USERS_DB"
     }
   }
 }
