@@ -15,6 +15,7 @@ public class PasswordService {
     }
 
     public List<PasswordEntity> updatePasswordRegister(List<PasswordEntity> passwordRegister, String newPassword) {
+        if (newPassword == null) return passwordRegister;
         passwordRegister.forEach(passwordEntity -> passwordEntity.setStatus(0));
         passwordRegister.add(passwordEncoder(newPassword));
         return passwordRegister;

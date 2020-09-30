@@ -1,4 +1,4 @@
-package com.milankas.training.validator.NoSpacesValidator;
+package com.milankas.training.validator.noSpacesValidator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

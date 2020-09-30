@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "USER_PROD": {
+      "Name": "USERS_API_DB_SERVER",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "super_admin",
+      "Host": "postgres-users",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "USERS_DB"
+    }
+  }
+}

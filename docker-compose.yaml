@@ -1,68 +1,56 @@
-version: "3.7"
+version: "3.8"
 
 services:
 
-  springbootapp:
-    build: .
-    container_name: company-api-spring
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/COMPANY_DB
-      SPRING_DATASOURCE_USERNAME: super_admin
-      SPRING_DATASOURCE_PASSWORD: super_password
-    ports:
-      - 8080:8080
-    depends_on:
-      - postgres
-    links:
-      - postgres
-    networks:
-      - apidb
-      - interdb
-
-  postgres:
-    container_name: company-api-postgres
+  postgres-users:
+    container_name: USER_API_POSTGRES
     image: postgres:latest
     hostname: postgres
     ports:
-      - "5432:5432"
+      - "5442:5432"
     environment:
       POSTGRES_USER: super_admin
       POSTGRES_PASSWORD: super_password
-      POSTGRES_DB: COMPANY_DB
+      POSTGRES_DB: USERS_DB
     volumes:
-      - COMPANY_DB_VOLUME:/var/lib/postgresql/data
+      - SPRING_API_USER_DB_VOLUME:/var/lib/postgresql/data
       - ./docker/postgres/shared/:/shared/
     restart: unless-stopped
     networks:
-      - interapi
       - apidb
 
-  pgadmin:
-    container_name: company-api-pgadmin
+  springboot-company:
+    build: .
+    container_name: USER_API_SPRING
+#    image: company-api:0.1
+    ports:
+      - 8093:8093
+    depends_on:
+      - postgres-users
+    links:
+      - postgres-users
+    networks:
+      - apidb
+
+  pgadmin-users:
+    container_name: USER_API_PGADMIN
     image: dpage/pgadmin4
     ports:
-      - "5555:80"
+      - "4444:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: superadmin@companyapi.org
+      PGADMIN_DEFAULT_EMAIL: superadmin@springapi.org
       PGADMIN_DEFAULT_PASSWORD: superpassword
-      PGADMIN_SERVER_JSON_FILE: /pgadmin4/conf/server.json
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/conf/server-prod.json
     volumes:
       - ./docker/pgadmin/:/pgadmin4/conf/
     restart: unless-stopped
+    networks:
+      - apidb
 
 volumes:
-  COMPANY_DB_VOLUME:
+  SPRING_API_USER_DB_VOLUME:
 
 networks:
-  interapi:
-    name: companyapi_interapi
-    driver: bridge
   apidb:
-    name: companyapi_apidb
-    driver: bridge
-  default:
-    name: companyapi_default
-    driver: bridge
-  interdb:
-    name: companyapi_interdb
+    name: network_db
     driver: bridge

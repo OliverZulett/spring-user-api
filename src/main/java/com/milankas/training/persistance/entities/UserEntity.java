@@ -29,7 +29,7 @@ public class UserEntity {
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name = "line_item")
+    @JoinColumn(name = "user_id")
     private List<PasswordEntity> passwords = new ArrayList<>();
 
 }

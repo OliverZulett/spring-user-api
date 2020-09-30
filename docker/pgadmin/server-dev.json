@@ -1,11 +1,11 @@
 {
   "Servers": {
-    "1": {
-      "Name": "SPRING_API_DB_SERVER",
+    "USER_DEV": {
+      "Name": "USERS_API_DB_DEV_SERVER",
       "Group": "Servers",
       "Port": 5432,
       "Username": "super_admin",
-      "Host": "postgres",
+      "Host": "postgres-users-dev",
       "SSLMode": "prefer",
       "MaintenanceDB": "USERS_DB"
     }

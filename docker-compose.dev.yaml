@@ -2,33 +2,42 @@ version: "3.8"
 
 services:
 
-  postgres:
-    container_name: USERS_DB_DEV
+  postgres-users-dev:
+    container_name: USER_API_POSTGRES_DEV
     image: postgres:latest
     hostname: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: super_admin
       POSTGRES_PASSWORD: super_password
       POSTGRES_DB: USERS_DB
     volumes:
-      - SPRING_API_DB:/var/lib/postgresql/data
+      - SPRING_API_USER_DEV_DB_VOLUME:/var/lib/postgresql/data
       - ./docker/postgres/shared/:/shared/
     restart: unless-stopped
+    networks:
+      - apidevdb
 
-  pgadmin:
-    container_name: SPRING_API_PGADMIN
+  pgadmin-dev:
+    container_name: USER_API_PGADMIN_DEV
     image: dpage/pgadmin4
     ports:
       - "5555:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: superadmin@springapi.org
       PGADMIN_DEFAULT_PASSWORD: superpassword
-      PGADMIN_SERVER_JSON_FILE: /pgadmin4/conf/server.json
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/conf/server-dev.json
     volumes:
       - ./docker/pgadmin/:/pgadmin4/conf/
     restart: unless-stopped
+    networks:
+      - apidevdb
 
 volumes:
-  SPRING_API_DB:
+  SPRING_API_USER_DEV_DB_VOLUME:
+
+networks:
+  apidevdb:
+    name: network_dev_db
+    driver: bridge
