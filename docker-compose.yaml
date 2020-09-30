@@ -19,10 +19,10 @@ services:
     networks:
       - apidb
 
-  springboot-company:
+  springboot-user:
     build: .
     container_name: USER_API_SPRING
-#    image: company-api:0.1
+#    image: user-api:0.1
     ports:
       - 8093:8093
     depends_on:
