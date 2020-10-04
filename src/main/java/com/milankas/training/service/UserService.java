@@ -1,12 +1,11 @@
-package com.milankas.training.service.user;
+package com.milankas.training.service;
 
-import com.milankas.training.mapper.User.UserMapperInterface;
+import com.milankas.training.mapper.UserMapper;
 import com.milankas.training.dto.user.PatchUserInputDTO;
 import com.milankas.training.dto.user.PostUserInputDTO;
 import com.milankas.training.dto.user.UserOutputDTO;
-import com.milankas.training.persistance.entities.UserEntity;
-import com.milankas.training.persistance.repositories.UserRepository;
-import com.milankas.training.service.password.PasswordService;
+import com.milankas.training.persistance.entity.UserEntity;
+import com.milankas.training.persistance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    UserMapperInterface userMapper;
+    UserMapper userMapper;
     @Autowired
     PasswordService passwordService;
 

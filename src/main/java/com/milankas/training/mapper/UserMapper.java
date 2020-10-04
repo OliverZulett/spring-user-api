@@ -1,19 +1,18 @@
-package com.milankas.training.mapper.User;
+package com.milankas.training.mapper;
 
 import com.milankas.training.dto.user.PatchUserInputDTO;
 import com.milankas.training.dto.user.PostUserInputDTO;
 import com.milankas.training.dto.user.UserOutputDTO;
-import com.milankas.training.persistance.entities.UserEntity;
-import org.mapstruct.BeforeMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
+import com.milankas.training.persistance.entity.UserEntity;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface UserMapperInterface {
+public interface UserMapper {
 
-    UserMapperInterface MAPPER = Mappers.getMapper(UserMapperInterface.class);
+    UserMapper MAPPER = Mappers.getMapper(UserMapper.class);
 
+    @Mappings({@Mapping(target = "userId", source = "id")})
     UserOutputDTO EntityToDto(UserEntity userEntity);
 
     UserEntity PostDtoToEntity(PostUserInputDTO userDTO);

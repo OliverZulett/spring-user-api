@@ -1,4 +1,4 @@
-package com.milankas.training.persistance.entities;
+package com.milankas.training.persistance.entity;
 
 import lombok.Getter;
 import lombok.Setter;

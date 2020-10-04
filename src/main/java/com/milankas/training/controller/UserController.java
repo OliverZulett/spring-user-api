@@ -4,7 +4,7 @@ import com.milankas.training.dto.user.PatchUserInputDTO;
 import com.milankas.training.dto.user.PostUserInputDTO;
 import com.milankas.training.dto.user.UserOutputDTO;
 import com.milankas.training.exception.ResourceNotFoundException;
-import com.milankas.training.service.user.UserService;
+import com.milankas.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

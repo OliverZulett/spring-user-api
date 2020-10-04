@@ -1,6 +1,6 @@
-package com.milankas.training.service.password;
+package com.milankas.training.service;
 
-import com.milankas.training.persistance.entities.PasswordEntity;
+import com.milankas.training.persistance.entity.PasswordEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 

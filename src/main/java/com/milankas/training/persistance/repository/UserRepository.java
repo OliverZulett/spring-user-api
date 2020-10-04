@@ -1,6 +1,6 @@
-package com.milankas.training.persistance.repositories;
+package com.milankas.training.persistance.repository;
 
-import com.milankas.training.persistance.entities.UserEntity;
+import com.milankas.training.persistance.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
