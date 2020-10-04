@@ -8,7 +8,6 @@ import com.milankas.training.exception.ResourceNotFoundException;
 import com.milankas.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,35 +28,37 @@ public class UserController {
         return userService.findAllUsers();
     }
 
-//    @GetMapping("/users")
-//    public ResponseEntity<List<UserOutputDTO>> getAllUsers() {
-//        return ResponseEntity.ok(userService.findAllUsers());
-//    }
-
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserOutputDTO> getUserById(@Valid @PathVariable(value = "id") UUID userId) throws ResourceNotFoundException {
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public UserOutputDTO getUserById(@Valid @PathVariable(value = "id") UUID userId) throws ResourceNotFoundException {
         UserOutputDTO userFound = userService.findUserById(userId);
         if (userFound == null) throw new ResourceNotFoundException("User not found for id: " + userId);
-        return ResponseEntity.ok(userFound);
+        return userFound;
     }
 
     @PostMapping("/users")
-    public ResponseEntity<UserOutputDTO> createUser(@Valid @RequestBody PostUserInputDTO userToSave) {
-        return new ResponseEntity<>(userService.saveUser(userToSave), HttpStatus.CREATED);
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseBody
+    public UserOutputDTO createUser(@Valid @RequestBody PostUserInputDTO userToSave) {
+        return userService.saveUser(userToSave);
     }
 
     @PatchMapping("/users/{id}")
-    public ResponseEntity<UserOutputDTO> updateUser(@Valid @PathVariable(value = "id") UUID userId, @Valid @RequestBody PatchUserInputDTO userForUpdate) throws ResourceNotFoundException, PasswordExistingException {
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public UserOutputDTO updateUser(@Valid @PathVariable(value = "id") UUID userId, @Valid @RequestBody PatchUserInputDTO userForUpdate) throws ResourceNotFoundException, PasswordExistingException {
         UserOutputDTO userUpdated = userService.updateUserById(userId, userForUpdate);
         if (userUpdated == null) throw new ResourceNotFoundException("User not found for id: " + userId);
-        return new ResponseEntity<UserOutputDTO>(userUpdated, HttpStatus.OK);
+        return userUpdated;
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") UUID userId) throws ResourceNotFoundException {
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteUser (@Valid @PathVariable(value = "id") UUID userId) throws ResourceNotFoundException {
         Boolean userDeleted = userService.deleteUserById(userId);
         if (userDeleted == null) throw new ResourceNotFoundException("User not found for id: " + userId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
