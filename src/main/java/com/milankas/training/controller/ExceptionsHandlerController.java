@@ -3,6 +3,7 @@ package com.milankas.training.controller;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.milankas.training.exception.ErrorDetails;
+import com.milankas.training.exception.PasswordExistingException;
 import com.milankas.training.exception.ResourceNotFoundException;
 import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
@@ -65,6 +66,13 @@ public class ExceptionsHandlerController {
 	@ResponseBody
 	public ErrorDetails resourceNotFoundExceptionHandler(ResourceNotFoundException ex) {
 		return new ErrorDetails("Item not found", ex.getMessage());
+	}
+
+	@ExceptionHandler(PasswordExistingException.class)
+	@ResponseStatus(value = HttpStatus.CONFLICT)
+	@ResponseBody
+	public ErrorDetails passwordExistingExceptionHandler(PasswordExistingException ex) {
+		return new ErrorDetails("Password conflict", ex.getMessage());
 	}
 
 }
