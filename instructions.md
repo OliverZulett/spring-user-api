@@ -11,7 +11,7 @@ Java Version: 8
 Packaging: Jar
 Dependencies:
 - Spring Web
-- Lombok
+- Lombok1
 - MapStruct
 
 En esta aplicación, debe conservar el objeto Producto con la siguiente estructura:

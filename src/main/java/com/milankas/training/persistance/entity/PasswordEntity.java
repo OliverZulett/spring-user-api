@@ -26,4 +26,7 @@ public class PasswordEntity {
     @Column(name = "status")
     private Integer status;
 
+    @Column(name = "user_id")
+    private UUID userId;
+
 }

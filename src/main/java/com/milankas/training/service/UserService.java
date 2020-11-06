@@ -38,6 +38,10 @@ public class UserService {
         return userMapper.EntityToDto(userRepository.findById(id).orElse(null));
     }
 
+    public UserOutputDTO findUserByEmail(String email) {
+        return userMapper.EntityToDto(userRepository.findByEmail(email));
+    }
+
     public UserOutputDTO saveUser(@Valid PostUserInputDTO user) {
         UserEntity userToSave = userMapper.PostDtoToEntity(user);
         userToSave.setPasswords(passwordService.generatePasswordRegister(user.getPassword()));

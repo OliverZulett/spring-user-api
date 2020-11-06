@@ -32,4 +32,7 @@ public class UserEntity {
     @JoinColumn(name = "user_id")
     private List<PasswordEntity> passwords = new ArrayList<>();
 
+//    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<PasswordEntity> passwords;
+
 }
