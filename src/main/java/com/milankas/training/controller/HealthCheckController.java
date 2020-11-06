@@ -1,4 +1,4 @@
-package com.milankascomposer.composerapi.controller;
+package com.milankas.training.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
