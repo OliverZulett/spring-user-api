@@ -11,7 +11,9 @@ import java.lang.annotation.*;
 public @interface NoSpacesConstraint {
 
     String message() default "Field is empty";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 
 }

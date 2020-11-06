@@ -1,12 +1,10 @@
 package com.milankas.training.service;
 
-import com.milankas.training.exception.PasswordExistingException;
-import com.milankas.training.exception.ResourceNotFoundException;
-import com.milankas.training.mapper.UserMapper;
 import com.milankas.training.dto.user.PatchUserInputDTO;
 import com.milankas.training.dto.user.PostUserInputDTO;
 import com.milankas.training.dto.user.UserOutputDTO;
-import com.milankas.training.persistance.entity.PasswordEntity;
+import com.milankas.training.exception.PasswordExistingException;
+import com.milankas.training.mapper.UserMapper;
 import com.milankas.training.persistance.entity.UserEntity;
 import com.milankas.training.persistance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +53,7 @@ public class UserService {
     }
 
     public Boolean deleteUserById(UUID id) {
-        UserEntity userFound = userRepository.findById(id).orElse( null);
+        UserEntity userFound = userRepository.findById(id).orElse(null);
         if (userFound == null) return null;
         userRepository.delete(userFound);
         return true;

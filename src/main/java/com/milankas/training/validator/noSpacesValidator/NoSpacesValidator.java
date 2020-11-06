@@ -6,7 +6,8 @@ import javax.validation.ConstraintValidatorContext;
 public class NoSpacesValidator implements ConstraintValidator<NoSpacesConstraint, String> {
 
     @Override
-    public void initialize(NoSpacesConstraint constraintAnnotation) { }
+    public void initialize(NoSpacesConstraint constraintAnnotation) {
+    }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

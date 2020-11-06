@@ -6,7 +6,8 @@ import javax.validation.ConstraintValidatorContext;
 public class OnlyLettersValidator implements ConstraintValidator<OnlyLettersConstraint, String> {
 
     @Override
-    public void initialize(OnlyLettersConstraint constraintAnnotation) { }
+    public void initialize(OnlyLettersConstraint constraintAnnotation) {
+    }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

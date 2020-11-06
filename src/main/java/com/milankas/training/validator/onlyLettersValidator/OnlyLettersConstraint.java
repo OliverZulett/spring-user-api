@@ -1,7 +1,5 @@
 package com.milankas.training.validator.onlyLettersValidator;
 
-import com.milankas.training.validator.noSpacesValidator.NoSpacesValidator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
@@ -13,7 +11,9 @@ import java.lang.annotation.*;
 public @interface OnlyLettersConstraint {
 
     String message() default "Field must only contain letters";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 
 }

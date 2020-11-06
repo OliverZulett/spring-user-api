@@ -24,6 +24,7 @@ public interface UserMapper {
         if (userDTO.getLastName() == null) userDTO.setLastName(userEntity.getLastName());
         if (userDTO.getEmail() == null) userDTO.setEmail(userEntity.getEmail());
     }
+
     UserEntity PatchDtoToEntity(@MappingTarget UserEntity userEntity, PatchUserInputDTO userDTO);
 
 }

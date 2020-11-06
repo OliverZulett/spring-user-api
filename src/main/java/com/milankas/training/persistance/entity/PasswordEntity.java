@@ -14,16 +14,16 @@ public class PasswordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique=true)
+    @Column(unique = true)
     private UUID id;
 
-    @Column(name="hash")
+    @Column(name = "hash")
     private String hash;
 
-    @Column(name="salt")
+    @Column(name = "salt")
     private String salt;
 
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
 
 }

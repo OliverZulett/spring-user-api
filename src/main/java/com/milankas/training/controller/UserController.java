@@ -56,7 +56,7 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void deleteUser (@Valid @PathVariable(value = "id") UUID userId) throws ResourceNotFoundException {
+    public void deleteUser(@Valid @PathVariable(value = "id") UUID userId) throws ResourceNotFoundException {
         Boolean userDeleted = userService.deleteUserById(userId);
         if (userDeleted == null) throw new ResourceNotFoundException("User not found for id: " + userId);
     }
