@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("v1")
@@ -19,7 +20,7 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String getToken(@Valid @RequestBody PostCredentialDTO userCredentials) throws UnauthorizedException {
+    public String getToken(@Valid @RequestBody PostCredentialDTO userCredentials) throws UnauthorizedException, IOException {
         return this.authenticationService.login(userCredentials);
     }
 
