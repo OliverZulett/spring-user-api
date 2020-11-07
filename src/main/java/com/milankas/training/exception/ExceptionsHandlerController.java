@@ -1,4 +1,4 @@
-package com.milankas.training.controller;
+package com.milankas.training.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -18,6 +18,13 @@ import java.util.Objects;
 
 @ControllerAdvice
 public class ExceptionsHandlerController {
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ErrorDetails unauthorizedExceptionHandler(UnauthorizedException ex) {
+        return new ErrorDetails("Unauthorized", ex.getMessage());
+    }
 
     @ExceptionHandler(JsonMappingException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)

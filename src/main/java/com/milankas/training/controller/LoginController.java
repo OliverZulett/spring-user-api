@@ -21,7 +21,9 @@ public class LoginController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String getToken(@Valid @RequestBody PostCredentialDTO userCredentials) throws UnauthorizedException, IOException {
-        return this.authenticationService.login(userCredentials);
+        String token = this.authenticationService.login(userCredentials);
+        if (token == null) throw new UnauthorizedException("Incorrect password");
+        return token;
     }
 
 }

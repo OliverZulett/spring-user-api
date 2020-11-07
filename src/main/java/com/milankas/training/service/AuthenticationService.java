@@ -26,6 +26,7 @@ public class AuthenticationService {
         if (this.encryptionService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userStored.getUserId()), userCredentials.getPassword())) {
             return this.tokenService.getToken(userStored);
         }
-        return "Incorrect password";
+        return null;
     }
+
 }
