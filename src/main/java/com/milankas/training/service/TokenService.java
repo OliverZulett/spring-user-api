@@ -43,14 +43,14 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
             return JWT.create()
-                    .withIssuer("milankas.api")
+                    .withIssuer("user.api")
                     .withSubject(user.getUserId().toString())
                     .withJWTId(UUID.randomUUID().toString())
                     .withIssuedAt(jwtCreationTimeStamp.getTime())
                     .withExpiresAt(jwtExpiredTimeStamp.getTime())
                     .sign(algorithm);
-        } catch (JWTCreationException exception){
-            System.out.println("jwt generation failed: "+ exception);
+        } catch (JWTCreationException exception) {
+            System.out.println("jwt generation failed: " + exception);
         }
         return null;
     }
@@ -62,8 +62,8 @@ public class TokenService {
             Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
             JWTVerifier verifier = JWT.require(algorithm).build();
             return verifier.verify(token);
-        } catch (JWTVerificationException exception){
-            System.out.println("jwt verify failed: "+ exception);
+        } catch (JWTVerificationException exception) {
+            System.out.println("jwt verify failed: " + exception);
         }
         return null;
     }

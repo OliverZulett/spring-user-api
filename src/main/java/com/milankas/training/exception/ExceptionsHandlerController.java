@@ -2,9 +2,6 @@ package com.milankas.training.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.milankas.training.exception.ErrorDetails;
-import com.milankas.training.exception.PasswordExistingException;
-import com.milankas.training.exception.ResourceNotFoundException;
 import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

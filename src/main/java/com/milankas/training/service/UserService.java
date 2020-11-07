@@ -3,7 +3,9 @@ package com.milankas.training.service;
 import com.milankas.training.dto.user.PatchUserInputDTO;
 import com.milankas.training.dto.user.PostUserInputDTO;
 import com.milankas.training.dto.user.UserOutputDTO;
+import com.milankas.training.exception.InvalidParamException;
 import com.milankas.training.exception.PasswordExistingException;
+import com.milankas.training.exception.ResourceNotFoundException;
 import com.milankas.training.mapper.UserMapper;
 import com.milankas.training.persistance.entity.UserEntity;
 import com.milankas.training.persistance.repository.UserRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,6 +27,8 @@ public class UserService {
     UserMapper userMapper;
     @Autowired
     PasswordService passwordService;
+    @Autowired
+    EncryptionService encryptionService;
 
     public List<UserOutputDTO> findAllUsers() {
         List<UserEntity> usersReceived = userRepository.findAll();
@@ -36,6 +41,10 @@ public class UserService {
 
     public UserOutputDTO findUserById(UUID id) {
         return userMapper.EntityToDto(userRepository.findById(id).orElse(null));
+    }
+
+    public Optional<UserEntity> findUSerEntityById(UUID id) {
+        return userRepository.findById(id);
     }
 
     public UserOutputDTO findUserByEmail(String email) {
@@ -54,6 +63,12 @@ public class UserService {
         UserEntity userToUpdate = userMapper.PatchDtoToEntity(userFound, user);
         userToUpdate.setPasswords(passwordService.updatePasswordRegister(userToUpdate.getPasswords(), user.getPassword()));
         return userMapper.EntityToDto(userRepository.save(userToUpdate));
+    }
+
+    public Boolean updatePassword(UserEntity userForUpdate, String newPassword) throws PasswordExistingException, InvalidParamException, ResourceNotFoundException {
+        userForUpdate.setPasswords(passwordService.updatePasswordRegister(userForUpdate.getPasswords(), newPassword));
+        UserEntity userUpdated = userRepository.save(userForUpdate);
+        return this.encryptionService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userUpdated.getId()), newPassword);
     }
 
     public Boolean deleteUserById(UUID id) {

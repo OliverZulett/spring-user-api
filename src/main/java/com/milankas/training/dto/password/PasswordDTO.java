@@ -1,17 +1,22 @@
 package com.milankas.training.dto.password;
 
-import java.util.UUID;
+import com.milankas.training.validator.noSpacesValidator.NoSpacesConstraint;
+import lombok.Data;
 
-public class PasswordDTO {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-    private UUID id;
+public @Data
+class PasswordDTO {
 
-    private String hash;
+    @NotNull(message = "Password is required")
+    @NoSpacesConstraint(message = "Password must contain characters")
+    @Size(min = 2, max = 20, message = "Password must be between 5 and 20 characters")
+    private String oldPassword;
 
-    private String salt;
-
-    private Integer status;
-
-    private UUID userId;
+    @NotNull(message = "Password is required")
+    @NoSpacesConstraint(message = "Password must contain characters")
+    @Size(min = 2, max = 20, message = "Password must be between 5 and 20 characters")
+    private String newPassword;
 
 }
