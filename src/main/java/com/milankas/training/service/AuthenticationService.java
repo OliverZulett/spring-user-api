@@ -16,15 +16,13 @@ public class AuthenticationService {
     @Autowired
     PasswordService passwordService;
     @Autowired
-    EncryptionService encryptionService;
-    @Autowired
     TokenService tokenService;
 
     public String login(PostCredentialDTO userCredentials) throws UnauthorizedException, IOException {
         UserOutputDTO userStored = this.userService.findUserByEmail(userCredentials.getEmail());
         if (userStored == null) throw new UnauthorizedException("User not found");
-        if (this.encryptionService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userStored.getUserId()), userCredentials.getPassword())) {
-            return this.tokenService.getToken(userStored);
+        if (this.passwordService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userStored.getUserId()), userCredentials.getPassword())) {
+            return this.tokenService.generateToken(userStored);
         }
         return null;
     }

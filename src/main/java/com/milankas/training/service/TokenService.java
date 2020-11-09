@@ -32,7 +32,7 @@ import java.util.UUID;
 @Service
 public class TokenService {
 
-    public String getToken(UserOutputDTO user) throws IOException {
+    public String generateToken(UserOutputDTO user) throws IOException {
         RSAPublicKey publicKey = (RSAPublicKey) this.readPublicKeyFromFile("./rsa/public.pem", "RSA");
         RSAPrivateKey privateKey = (RSAPrivateKey) this.readPrivateKeyFromFile("./rsa/private.pem", "RSA");
         Calendar jwtCreationTimeStamp = Calendar.getInstance();
@@ -53,6 +53,10 @@ public class TokenService {
             System.out.println("jwt generation failed: " + exception);
         }
         return null;
+    }
+
+    public String getToken(String authorizationHeader) {
+        return authorizationHeader.split(" ")[1];
     }
 
     public DecodedJWT validateToken(String token) throws IOException {

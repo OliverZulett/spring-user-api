@@ -8,7 +8,6 @@ import com.milankas.training.exception.InvalidParamException;
 import com.milankas.training.exception.PasswordExistingException;
 import com.milankas.training.exception.ResourceNotFoundException;
 import com.milankas.training.persistance.entity.UserEntity;
-import com.milankas.training.service.EncryptionService;
 import com.milankas.training.service.PasswordService;
 import com.milankas.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private EncryptionService encryptionService;
     @Autowired
     private PasswordService passwordService;
 
@@ -69,7 +66,7 @@ public class UserController {
     public void updatePassword(@Valid @PathVariable(value = "id") UUID userId, @Valid @RequestBody PasswordDTO passwords) throws ResourceNotFoundException, PasswordExistingException, InvalidParamException {
         Optional<UserEntity> userFound = this.userService.findUSerEntityById(userId);
         if (!userFound.isPresent()) throw new ResourceNotFoundException("User not found for id: " + userId);
-        if (!this.encryptionService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userId), passwords.getOldPassword()))
+        if (!this.passwordService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userId), passwords.getOldPassword()))
             throw new PasswordExistingException("Incorrect actual password");
         if (!this.userService.updatePassword(userFound.get(), passwords.getNewPassword()))
             throw new InternalError("Update password fail");

@@ -27,8 +27,6 @@ public class UserService {
     UserMapper userMapper;
     @Autowired
     PasswordService passwordService;
-    @Autowired
-    EncryptionService encryptionService;
 
     public List<UserOutputDTO> findAllUsers() {
         List<UserEntity> usersReceived = userRepository.findAll();
@@ -68,7 +66,7 @@ public class UserService {
     public Boolean updatePassword(UserEntity userForUpdate, String newPassword) throws PasswordExistingException, InvalidParamException, ResourceNotFoundException {
         userForUpdate.setPasswords(passwordService.updatePasswordRegister(userForUpdate.getPasswords(), newPassword));
         UserEntity userUpdated = userRepository.save(userForUpdate);
-        return this.encryptionService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userUpdated.getId()), newPassword);
+        return this.passwordService.verifyPassword(this.passwordService.getCurrentPasswordByUserId(userUpdated.getId()), newPassword);
     }
 
     public Boolean deleteUserById(UUID id) {

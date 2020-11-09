@@ -17,10 +17,10 @@ public class PasswordService {
     @Autowired
     PasswordRepository passwordRepository;
     @Autowired
-    EncryptionService encryptionService;
+    PasswordService passwordService;
 
     public List<PasswordEntity> generatePasswordRegister(String password) {
-        return Arrays.asList(this.encryptionService.passwordEncoder(password));
+        return Arrays.asList(this.passwordService.passwordEncoder(password));
     }
 
     public List<PasswordEntity> updatePasswordRegister(List<PasswordEntity> passwordRegister, String newPassword) throws PasswordExistingException {
@@ -29,7 +29,7 @@ public class PasswordService {
         if (BCrypt.checkpw(newPassword, passwordRegister.get(passwordRegister.size() - 1).getHash()))
             throw new PasswordExistingException("New password cannot be the same that the actual password");
         ;
-        passwordRegister.add(this.encryptionService.passwordEncoder(newPassword));
+        passwordRegister.add(this.passwordService.passwordEncoder(newPassword));
         return passwordRegister;
     }
 
@@ -37,5 +37,17 @@ public class PasswordService {
         return this.passwordRepository.findByUserIdAndStatus(userId, 1);
     }
 
+    public Boolean verifyPassword(PasswordEntity passwordEntity, String password) {
+        return BCrypt.checkpw(password, passwordEntity.getHash());
+    }
 
+    public PasswordEntity passwordEncoder(String password) {
+        PasswordEntity passwordEncoded = new PasswordEntity();
+        String salt = BCrypt.gensalt();
+        String hash = BCrypt.hashpw(password, salt);
+        passwordEncoded.setSalt(salt);
+        passwordEncoded.setHash(hash);
+        passwordEncoded.setStatus(1);
+        return passwordEncoded;
+    }
 }
